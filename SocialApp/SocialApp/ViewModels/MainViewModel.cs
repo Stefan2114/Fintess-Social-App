@@ -12,9 +12,9 @@ namespace SocialApp.ViewModels
     using Microsoft.Extensions.DependencyInjection;
     using SocialApp.Interfaces;
     using SocialApp.Pages;
-    using SocialApp.Proxies;
     using SocialApp.Queries;
     using SocialApp.Services;
+    using SocialApp.Proxies;
 
     public class MainViewModel : INotifyPropertyChanged
     {
