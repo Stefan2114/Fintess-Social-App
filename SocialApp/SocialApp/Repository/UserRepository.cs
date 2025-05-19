@@ -7,7 +7,7 @@
     public class UserRepository
     {
 
-        private const string ConnectionString = "Server=DESKTOP-M2TF6Q6\\SQLEXPRESS;Database=SocialApp;Trusted_Connection=True;TrustServerCertificate=True;";
+        private const string ConnectionString = "Server=DESKTOP-B33HRLE;Database=Meal_Planner_Merge;Trusted_Connection=True;TrustServerCertificate=True;";
 
         private readonly SqlConnection connection;
 

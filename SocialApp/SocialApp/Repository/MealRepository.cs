@@ -5,7 +5,7 @@ using AppCommonClasses.Interfaces;
 using AppCommonClasses.Models;
 using System;
 
-namespace SocialApp.Repository
+namespace AppCommonClasses.Repos
 {
     /// <summary>
     /// Repository for meal data access.
