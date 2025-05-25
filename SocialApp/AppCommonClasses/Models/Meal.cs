@@ -19,9 +19,6 @@ namespace AppCommonClasses.Models
         [Column("m_name")]
         public string Name { get; set; }
 
-        [Column("mt_id")]
-        public int Mt_id { get; set; } // MealTypeId
-
         public string Ingredients { get; set; }
 
         [Column("calories")]
@@ -36,43 +33,29 @@ namespace AppCommonClasses.Models
 
         public double Fat { get; set; }
 
-        public double Fiber { get; set; }
-
-        public double Sugar { get; set; }
-
         [Column("photo_link")]
         public string PhotoLink { get; set; }
 
-        public string Recipe { get; set; }
+        public string Description { get; set; }
 
         [Column("preparation_time")]
         public double PreparationTime { get; set; }
-
-        [Column("servings")]
-        public double Servings { get; set; }
-
-        public DateTime CreatedAt { get; set; }
-
-        public string CookingLevel { get; set; }
 
         public byte[] Image { get; set; }
 
         public string ImagePath { get; set; }
 
-        public Meal(string name, string ingredients, int calories, string category, string photoLink, string recipe)
+        public Meal(string name, string ingredients, int calories, string category, string photoLink, string description, double protein, double fat, double carbohydrates, double preparationTime)
         {
             Name = name;
             Ingredients = ingredients;
             Calories = calories;
-            Category = category;
             PhotoLink = photoLink;
-            Recipe = recipe;
-            CreatedAt = DateTime.Now;
-        }
-
-        public Meal()
-        {
-            CreatedAt = DateTime.Now;
+            Description = description;
+            Protein = protein;
+            Carbohydrates = carbohydrates;
+            Fat = fat;
+            PreparationTime = preparationTime;
         }
     }
 
@@ -80,20 +63,5 @@ namespace AppCommonClasses.Models
     {
         SuccessfulCreationIndicator = 0,
         FailedOperationCode = -1,
-        BreakfastTypeId = 1,
-        LunchTypeId = 2,
-        DinnerTypeId = 3,
-        SnackTypeId = 4,
-        DessertTypeId = 5,
-        PostWorkoutTypeId = 6,
-        PreWorkoutTypeId = 7,
-        VeganMealTypeId = 8,
-        HighProteinMealTypeId = 9,
-        LowCarbMealTypeId = 10,
-        DefaultMealTypeId = 1,
-        BeginnerSkillId = 1,
-        IntermediateSkillId = 2,
-        AdvancedSkillId = 3,
-        DefaultCookingSkillId = 1,
     }
 }

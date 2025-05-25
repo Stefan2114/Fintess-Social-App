@@ -31,12 +31,6 @@
         [Column("fat")]
         public double Fats { get; set; }
 
-        [Column("fiber")]
-        public double Fiber { get; set; }
-
-        [Column("sugar")]
-        public double Sugar { get; set; }
-
         public Ingredient(int id, string name, string category, double calories, double protein, double carbs, double fats, double fiber, double sugar)
         {
             Id = id;
@@ -46,8 +40,6 @@
             Protein = protein;
             Carbs = carbs;
             Fats = fats;
-            Fiber = fiber;
-            Sugar = sugar;
         }
 
         public Ingredient()
