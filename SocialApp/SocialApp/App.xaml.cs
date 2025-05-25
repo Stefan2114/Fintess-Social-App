@@ -1,6 +1,8 @@
 ﻿using System;
 using AppCommonClasses.Interfaces;
 using AppCommonClasses.Repos;
+using AppCommonClasses.Services;
+using MealSocialServerMVC.Proxies;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -28,21 +30,26 @@ namespace SocialApp
             this.UnhandledException += OnUnhandledException;
             var services = new ServiceCollection();
             services.AddSingleton<AppController>();
-            services.AddHttpClient<MealServiceProxy>();
             services.AddSingleton<IUserRepository, UserRepository>();
             services.AddSingleton<IPostRepository, PostRepository>();
-            services.AddSingleton<ICommentService, CommentService>();
             services.AddSingleton<IMealRepository, MealRepository>();
             services.AddSingleton<IIngredientRepository, IngredientRepository>();
+            services.AddSingleton<IIngredientRepository, IngredientRepository>();
+            services.AddSingleton<IGroceryListRepository, GroceryListRepositoryProxy>();
 
+
+            services.AddHttpClient<MealServiceProxy>(); // ce plm e asta???
             services.AddSingleton<IUserService, UserServiceProxy>();
             services.AddSingleton<IPostService, PostServiceProxy>();
-            services.AddSingleton<IGroceryListRepository, GroceryListRepositoryProxy>();
+            services.AddSingleton<ICommentService, CommentServiceProxy>();
+            services.AddSingleton<ICommentService, CommentServiceProxy>();
             services.AddSingleton<IGroceryListService, GroceryListService>();
-            services.AddSingleton<IIngredientRepository, IngredientRepository>();
+            services.AddSingleton<IMacrosService, MacrosServiceProxy>();
             services.AddSingleton<IMealService, MealServiceProxy>();
+            services.AddSingleton<IWaterIntakeService, WaterIntakeServiceProxy>();
+            services.AddSingleton<ICalorieService, CalorieServiceProxy>();
+            services.AddSingleton<IGroupService, GroupServiceProxy>();
             services.AddSingleton<CreateMealViewModel>();
-
             services.AddTransient<GroceryViewModel>();
             services.AddTransient<GroceryListPage>();
             services.AddTransient<MainPage>();

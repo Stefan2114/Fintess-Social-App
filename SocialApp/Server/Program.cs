@@ -4,7 +4,6 @@ using AppCommonClasses.Repos;
 using AppCommonClasses.Services;
 using Microsoft.EntityFrameworkCore;
 using Server.Interfaces;
-using AppCommonClasses.Repos;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<SocialAppDbContext>(options =>
@@ -16,7 +15,6 @@ builder.Services.AddScoped<IPostRepository, PostRepository>();
 builder.Services.AddScoped<IGroceryListRepository, GroceryListRepository>();
 builder.Services.AddScoped<IMealRepository, MealRepository>();
 builder.Services.AddScoped<IReactionRepository, ReactionRepository>();
-builder.Services.AddScoped<IGoalPageRepository, GoalPageRepository>();
 builder.Services.AddScoped<IMacrosRepository, MacrosRepository>();
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 builder.Services.AddScoped<IBodyMetricRepository, BodyMetricRepository>();
@@ -25,12 +23,15 @@ builder.Services.AddScoped<IWaterIntakeRepository, WaterIntakeRepository>();
 builder.Services.AddScoped<IGroupRepository, GroupRepository>();
 builder.Services.AddScoped<IMealRepository, MealRepository>();
 builder.Services.AddScoped<IIngredientRepository, IngredientRepository>();
+builder.Services.AddScoped<IBodyMetricService, BodyMetricService>();
 
+
+builder.Services.AddScoped<IGroupService, GroupService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IPostService, PostService>();
 builder.Services.AddScoped<IMealService, MealService>();
 builder.Services.AddScoped<IMacrosService, MacrosService>();
-
+builder.Services.AddScoped<ICommentService, CommentService>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

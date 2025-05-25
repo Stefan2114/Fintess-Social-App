@@ -41,10 +41,12 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IMealService, MealService>();
 builder.Services.AddScoped<IBodyMetricService, BodyMetricService>();
 builder.Services.AddScoped<ICalorieService, CalorieService>();
+builder.Services.AddSession();
 builder.Services.AddScoped<IWaterIntakeService, WaterService>();
-
-
+builder.Services.AddScoped<IGroupService, GroupService>();
+builder.Services.AddScoped<IMacrosService, MacrosService>();
 builder.Services.AddControllersWithViews();
+
 
 var app = builder.Build();
 
@@ -72,4 +74,5 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
 
+app.UseSession();
 app.Run();

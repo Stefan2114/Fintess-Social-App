@@ -12,6 +12,7 @@ namespace SocialApp.ViewModels
     using Microsoft.Extensions.DependencyInjection;
     using SocialApp.Interfaces;
     using SocialApp.Pages;
+    using SocialApp.Proxies;
     using SocialApp.Queries;
     using SocialApp.Services;
     using SocialApp.Proxies;
@@ -270,14 +271,14 @@ namespace SocialApp.ViewModels
             long number_userId = UserId;
             UserId = App.Services.GetService<AppController>().CurrentUser.Id;
             // Initialize WaterService
-            waterService = new WaterIntakeService();
+            waterService = App.Services.GetService<IWaterIntakeService>();
             waterService.AddUserIfNotExists(number_userId); // Ensure user exists in the water tracker table
 
             // Initialize CalorieService
-            calorieService = new CalorieServiceProxy();
+            calorieService = App.Services.GetService<ICalorieService>();
 
             // Initialize MacrosService
-            macrosService = new MacrosServiceProxy(new HttpClient { BaseAddress = new Uri("https://localhost:7106/") });
+            macrosService = App.Services.GetService<IMacrosService>();
 
             System.Diagnostics.Debug.WriteLine("Getting water intake...");
 
