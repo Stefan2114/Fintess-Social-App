@@ -36,5 +36,14 @@ namespace AppCommonClasses.Models
         [Column("goal")]
         public string Goal { get; set; }
 
+        [Column("total_protein")]
+        public double? TotalProtein { get; set; }
+
+        [Column("total_carbohydrates")]
+        public double? TotalCarbohydrates { get; set; }
+
+        [Column("total_fat")]
+        public double? TotalFat { get; set; }
+
     }
 }
