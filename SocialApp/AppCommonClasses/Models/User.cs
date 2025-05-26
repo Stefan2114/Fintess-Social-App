@@ -19,7 +19,7 @@ namespace AppCommonClasses.Models
         [Column("password")]
         public string Password { get; set; }
 
-        [Column("iamge")]
+        [Column("image")]
         public string? Image { get; set; }
 
         [Required]

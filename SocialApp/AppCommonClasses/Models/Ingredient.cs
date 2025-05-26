@@ -7,17 +7,14 @@
     public class Ingredient
     {
         [Key]
-        [Column("i_id")]
+        [Column("id")]
         public int Id { get; set; }
 
-        [Column("u_id")]
+        [Column("user_id")]
         public long UserId { get; set; }
 
-        [Column("i_name")]
+        [Column("name")]
         public string Name { get; set; }
-
-        [Column("category")]
-        public string Category { get; set; }
 
         [Column("calories")]
         public double Calories { get; set; }
@@ -31,11 +28,10 @@
         [Column("fat")]
         public double Fats { get; set; }
 
-        public Ingredient(int id, string name, string category, double calories, double protein, double carbs, double fats, double fiber, double sugar)
+        public Ingredient(int id, string name, double calories, double protein, double carbs, double fats, double fiber, double sugar)
         {
             Id = id;
             Name = name;
-            Category = category;
             Calories = calories;
             Protein = protein;
             Carbs = carbs;
@@ -45,7 +41,5 @@
         public Ingredient()
         {
         }
-
-        public static Ingredient NoIngredient { get; private set; } = new Ingredient(-1, string.Empty, string.Empty, -1, -1, -1, -1, -1, -1);
     }
 }
