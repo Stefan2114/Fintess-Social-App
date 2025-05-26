@@ -19,13 +19,13 @@
         [Column("calories")]
         public double Calories { get; set; }
 
-        [Column("protein")]
+        [Column("proteins")]
         public double Protein { get; set; }
 
         [Column("carbohydrates")]
         public double Carbs { get; set; }
 
-        [Column("fat")]
+        [Column("fats")]
         public double Fats { get; set; }
 
         public Ingredient(int id, string name, double calories, double protein, double carbs, double fats, double fiber, double sugar)
