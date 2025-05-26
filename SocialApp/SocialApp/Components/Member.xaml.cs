@@ -13,7 +13,6 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using SocialApp.Pages;
-using SocialApp.Repository;
 using SocialApp.Services;
 using AppCommonClasses.Models;
 using Microsoft.Extensions.DependencyInjection;

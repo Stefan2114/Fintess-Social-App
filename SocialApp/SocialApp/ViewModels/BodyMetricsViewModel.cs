@@ -5,7 +5,6 @@
     using SocialApp.Pages;
     using SocialApp.Proxies;
     using SocialApp.Queries;
-    using SocialApp.Repository;
     using SocialApp.Services;
     using System;
     using System.Diagnostics;

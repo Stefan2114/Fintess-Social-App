@@ -6,7 +6,7 @@
     using SocialApp.Interfaces;
     using SocialApp.ViewModels;
 
-    public class NavigationService : INavigationService
+    public class NavigationService
     {
         private static NavigationService? instance;
         private Frame? mainFrame;

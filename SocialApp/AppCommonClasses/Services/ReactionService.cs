@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using AppCommonClasses.Models;
     using AppCommonClasses.Enums;
-    using SocialApp.Repository;
     using AppCommonClasses.Interfaces;
     using SocialApp.Interfaces;
 

@@ -9,7 +9,6 @@ namespace SocialApp.Components
     using SocialApp.Interfaces;
     using SocialApp.Pages;
     using SocialApp.Proxies;
-    using SocialApp.Repository;
     using SocialApp.Services;
 
     /// <summary>

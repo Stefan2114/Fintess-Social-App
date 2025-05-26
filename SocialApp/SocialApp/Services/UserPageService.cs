@@ -5,7 +5,7 @@ using SocialApp.Proxies;
 
 namespace SocialApp.Services
 {
-    public class UserPageService : IUserPageService
+    public class UserPageService
     {
         private IUserService userServiceProxy;
 

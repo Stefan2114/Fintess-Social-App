@@ -6,12 +6,11 @@
     using System.Text;
     using System.Threading.Tasks;
     using NSubstitute;
-    using SocalApp;
     using AppCommonClasses.Models;
     using AppCommonClasses.Enums;
-    using SocialApp.Services;
     using AppCommonClasses.Interfaces;
     using AppCommonClasses.Services;
+    using NUnit.Framework;
 
     /// <summary>
     /// Contains unit tests for the UserService class.
