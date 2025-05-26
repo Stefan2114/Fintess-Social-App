@@ -17,23 +17,23 @@
         public string Name { get; set; }
 
         [Column("calories")]
-        public double Calories { get; set; }
+        public int Calories { get; set; }
 
         [Column("proteins")]
-        public double Protein { get; set; }
+        public int Proteins { get; set; }
 
         [Column("carbohydrates")]
-        public double Carbs { get; set; }
+        public int Carbs { get; set; }
 
         [Column("fats")]
-        public double Fats { get; set; }
+        public int Fats { get; set; }
 
-        public Ingredient(int id, string name, double calories, double protein, double carbs, double fats, double fiber, double sugar)
+        public Ingredient(int id, string name, int calories, int protein, int carbs, int fats)
         {
             Id = id;
             Name = name;
             Calories = calories;
-            Protein = protein;
+            Proteins = protein;
             Carbs = carbs;
             Fats = fats;
         }
