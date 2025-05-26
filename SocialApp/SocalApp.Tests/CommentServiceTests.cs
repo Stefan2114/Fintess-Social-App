@@ -5,9 +5,21 @@ namespace SocialApp.Tests
 
     using System;
     using NSubstitute;
+    // Ensure that the NSubstitute NuGet package is installed in your project.  
+    // You can do this by running the following command in the NuGet Package Manager Console:  
+    // Install-Package NSubstitute  
+
+    // If the package is already installed, ensure that the project file includes a reference to it.  
+    // Check your .csproj file for a line like this:  
+    // <PackageReference Include="NSubstitute" Version="x.x.x" />  
+
+    // If the package is installed and referenced correctly, ensure that your IDE has restored the packages.  
+    // In Visual Studio, you can do this by right-clicking on the solution and selecting "Restore NuGet Packages".  
+
+    // After ensuring the above steps, the following using directive should work without errors:  
+    using NSubstitute;
     using NUnit.Framework;
     using AppCommonClasses.Models;
-    using SocialApp.Services;
     using AppCommonClasses.Interfaces;
     using AppCommonClasses.Services;
 

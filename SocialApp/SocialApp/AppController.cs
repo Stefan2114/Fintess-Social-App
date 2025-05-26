@@ -5,7 +5,6 @@ using AppCommonClasses.Interfaces;
 using AppCommonClasses.Models;
 using Microsoft.UI.Xaml.Media.Imaging;
 using SocialApp.Proxies;
-using SocialApp.Repository;
 using Windows.Storage;
 using Windows.Storage.Streams;
 

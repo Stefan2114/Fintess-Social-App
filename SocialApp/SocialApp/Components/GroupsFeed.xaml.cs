@@ -2,7 +2,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using AppCommonClasses.Enums;
-using SocialApp.Repository;
 using SocialApp.Services;
 using System.Collections.Generic;
 using System.Linq;

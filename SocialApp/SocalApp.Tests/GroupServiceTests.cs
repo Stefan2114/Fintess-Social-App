@@ -1,12 +1,12 @@
 ﻿namespace SocialApp.Tests
 {
     using System.Collections.Generic;
-    using SocialApp;
     using NSubstitute;
-    using SocialApp.Services;
     using AppCommonClasses.Models;
     using AppCommonClasses.Interfaces;
     using Microsoft.Extensions.DependencyInjection;
+    using NUnit.Framework;
+    using AppCommonClasses.Services;
 
     public class GroupServiceTests
     {
@@ -18,7 +18,7 @@
         {
             this.groupRepository = Substitute.For<IGroupRepository>();
             this.userRepository = Substitute.For<IUserRepository>();
-            this.service = App.Services.GetService<IGroupService>();
+            this.service = new GroupService(groupRepository, userRepository);
         }
 
         private Group CreateTestGroup(long id = 1, long adminId = 1)
