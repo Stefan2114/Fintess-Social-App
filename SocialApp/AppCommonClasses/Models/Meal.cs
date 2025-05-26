@@ -9,7 +9,6 @@ using AppCommonClasses.Enums;
 
 
 
-momentan asta ramane comentata
 namespace AppCommonClasses.Models
 {
 
