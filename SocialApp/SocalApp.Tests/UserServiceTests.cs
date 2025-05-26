@@ -6,12 +6,11 @@
     using System.Text;
     using System.Threading.Tasks;
     using NSubstitute;
-    using SocalApp;
     using AppCommonClasses.Models;
     using AppCommonClasses.Enums;
-    using SocialApp.Services;
     using AppCommonClasses.Interfaces;
     using AppCommonClasses.Services;
+    using NUnit.Framework;
 
     /// <summary>
     /// Contains unit tests for the UserService class.
@@ -109,7 +108,7 @@
             var userService = new UserService(userRepository);
             long userId = 1;
 
-            User user = new User { Id = userId, Email = "asdsad@gmail.com", Image = "lalal", Password = "asdasd", Username = "George" };
+            User user = new User { Id = userId, Image = "lalal", Password = "asdasd", Username = "George" };
             
             //userRepository.GetById(userId).Returns(user);
 
@@ -160,7 +159,6 @@
             {
                 Id = userId,
                 Username = username,
-                Email = email,
                 Password = password,
                 Image = image
             };

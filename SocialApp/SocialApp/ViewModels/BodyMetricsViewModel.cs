@@ -5,7 +5,6 @@
     using SocialApp.Pages;
     using SocialApp.Proxies;
     using SocialApp.Queries;
-    using SocialApp.Repository;
     using SocialApp.Services;
     using System;
     using System.Diagnostics;
@@ -127,7 +126,7 @@
                     heightValue,
                     targetWeightValue);
 
-                NavigationService.Instance.NavigateTo(typeof(GoalPage), this);
+                NavigationService.Instance.NavigateTo(typeof(YoureAllSetPage), this);
             }
             catch (Exception ex)
             {

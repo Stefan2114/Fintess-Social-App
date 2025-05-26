@@ -3,7 +3,6 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using AppCommonClasses.Enums;
-using SocialApp.Repository;
 using SocialApp.Services;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,7 +28,7 @@ namespace SocialApp.Components
 
             var userServiceProxy = new UserServiceProxy();
             var postRepository = new PostServiceProxy();
-            var groupRepository = new GroupRepository();
+            var groupRepository = new GroupServiceProxy();//ar trebui sa fie Service si cu dependency injection nu cu new trebuie schimbat
             var postService = new PostServiceProxy();
             this.postViewModel = new PostViewModel(postService);
 

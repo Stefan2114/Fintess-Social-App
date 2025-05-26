@@ -1,4 +1,7 @@
-﻿using AppCommonClasses.Interfaces;
+
+using AppCommonClasses.Interfaces;
+using AppCommonClasses.Models;
+using AppCommonClasses.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MealSocialServerMVC.Controllers
@@ -7,21 +10,21 @@ namespace MealSocialServerMVC.Controllers
     [Route("macros")]
     public class MacrosController : Controller
     {
-        private readonly IMacrosRepository _macrosRepository;
+        private readonly IMacrosService _macrosService;
 
-        public MacrosController(IMacrosRepository macrosRepository)
+        public MacrosController(IMacrosService macrosService)
         {
-            _macrosRepository = macrosRepository;
+            // You may want to use dependency injection for HttpClient in production
+            _macrosService = macrosService;
         }
         [HttpGet]
         public IActionResult Macros()
         {
             var userIdString = HttpContext.Session.GetString("UserId");
             long userId = long.Parse(userIdString);
-            var macros = _macrosRepository.GetMacrosByUserId(userId);
+            var macros = _macrosService.GetMacrosListByUserId(userId);
             ViewBag.UserId = userId;
             return View(macros);
         }
-
     }
 }

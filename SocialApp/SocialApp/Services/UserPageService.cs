@@ -5,7 +5,7 @@ using SocialApp.Proxies;
 
 namespace SocialApp.Services
 {
-    public class UserPageService : IUserPageService
+    public class UserPageService
     {
         private IUserService userServiceProxy;
 
@@ -29,12 +29,6 @@ namespace SocialApp.Services
                 Password = password,
                 Height = 0,
                 Weight = 0,
-                TargetWeight = 0,
-                GoalId = null,
-                CookingSkillId = null,
-                DietaryPreferenceId = null,
-                AllergyId = null,
-                ActivityLevelId = null,
             };
 
             var createdUser = this.userServiceProxy.Save(user);

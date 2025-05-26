@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
-using SocialApp.Repository;
 using SocialApp.Services;
 using SocialApp.Components;
 using AppCommonClasses.Models;
@@ -11,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using SocialApp.Proxies;
 using AppCommonClasses.Interfaces;
 using SocialApp.Interfaces;
+
 
 namespace SocialApp.Pages
 {
@@ -20,7 +20,6 @@ namespace SocialApp.Pages
         private const Visibility visible = Visibility.Visible;
         private IUserService userService;
         private IPostService postService;
-        private IGroupRepository groupRepository;
         private IGroupService groupService;
         private long GroupId;
         private AppCommonClasses.Models.Group group;
@@ -43,11 +42,10 @@ namespace SocialApp.Pages
 
         private void DisplayPage(object sender, RoutedEventArgs e)
         {
-            userService = new UserServiceProxy();
-            groupRepository = new GroupRepository();
-            var userRepository = App.Services.GetService<IUserRepository>();
-            groupService = new GroupService(groupRepository, userRepository);
-            postService = new PostServiceProxy();
+            userService = App.Services.GetService<IUserService>();
+            groupService = App.Services.GetService<IGroupService>();
+            postService = App.Services.GetService<IPostService>();
+
             group = groupService.GetGroupById(GroupId);
 
             SetVisibilities();
@@ -64,7 +62,7 @@ namespace SocialApp.Pages
         {
             var controller = App.Services.GetService<AppController>();
             if (controller.CurrentUser == null) return false;
-            return groupRepository.GetGroupById(GroupId).AdminId == controller.CurrentUser.Id;
+            return groupService.GetGroupById(GroupId).AdminId == controller.CurrentUser.Id;
         }
 
         private async void SetContent()

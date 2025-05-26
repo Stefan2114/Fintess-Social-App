@@ -1,23 +1,24 @@
 ﻿namespace SocialApp.Tests
 {
     using System.Collections.Generic;
-    using SocialApp;
     using NSubstitute;
-    using SocialApp.Services;
     using AppCommonClasses.Models;
     using AppCommonClasses.Interfaces;
+    using Microsoft.Extensions.DependencyInjection;
+    using NUnit.Framework;
+    using AppCommonClasses.Services;
 
     public class GroupServiceTests
     {
         private readonly IGroupRepository groupRepository;
         private readonly IUserRepository userRepository;
-        private readonly GroupService service;
+        private readonly IGroupService service;
 
         public GroupServiceTests()
         {
             this.groupRepository = Substitute.For<IGroupRepository>();
             this.userRepository = Substitute.For<IUserRepository>();
-            this.service = new GroupService(this.groupRepository, this.userRepository);
+            this.service = new GroupService(groupRepository, userRepository);
         }
 
         private Group CreateTestGroup(long id = 1, long adminId = 1)
@@ -38,7 +39,6 @@
             {
                 Id = id,
                 Username = $"user{id}",
-                Email = $"user{id}@example.com",
                 Password = $"hash{id}",
                 Image = $"avatar{id}.jpg"
             };
@@ -57,7 +57,7 @@
             this.groupRepository.GetAllGroups().Returns(expectedGroups);
 
             // Act
-            var result = this.service.GetAll();
+            var result = this.service.GetAllGroups();
 
             // Assert
             Assert.That(result, Is.EqualTo(expectedGroups));
