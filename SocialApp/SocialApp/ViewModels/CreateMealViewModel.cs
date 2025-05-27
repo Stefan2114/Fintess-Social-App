@@ -16,10 +16,10 @@
     public class CreateMealViewModel : ViewModelBase
     {
         private readonly IMealService mealService;
-        private string mealName = string.Empty; // Initialize to avoid null
-        private string cookingTime = string.Empty; // Initialize to avoid null
-        private string selectedMealType = string.Empty; // Initialize to avoid null
-        private string selectedCookingLevel = string.Empty; // Initialize to avoid null
+        private string _mealName = string.Empty; // Initialize to avoid null
+        private string _cookingTime = string.Empty; // Initialize to avoid null
+        private string _selectedMealType = string.Empty; // Initialize to avoid null
+        private string _selectedCookingLevel = string.Empty; // Initialize to avoid null
         private ObservableCollection<string> directions;
         private ObservableCollection<MealIngredient> ingredients;
         private StorageFile selectedImage = null!; // Use null-forgiving operator
@@ -31,6 +31,10 @@
         private int fats;
         private int fiber;
         private int sugar;
+
+        private string _mealNameError;
+        private string _mealTypeError;
+        private string _cookingTimeError;
 
         public CreateMealViewModel(IMealRepository mealRepository, IIngredientRepository ingredientRepository)
         {
@@ -48,54 +52,47 @@
             SelectCookingLevelCommand = new RelayCommand<string?>(OnSelectCookingLevel);
         }
 
-
         public string MealName
         {
-            get => mealName; // Fixes SA1101
+            get => _mealName;
             set
             {
-                if (mealName != value) // Fixes SA1101
-                {
-                    mealName = value; // Fixes SA1101
-                    OnPropertyChanged(); // Fixes SA1101
-                }
+                _mealName = value;
+                OnPropertyChanged(nameof(MealName));
+                ValidateMealName();
             }
         }
 
         public string CookingTime
         {
-            get => cookingTime; // Fixes SA1101
+            get => _cookingTime;
             set
             {
-                if (cookingTime != value) // Fixes SA1101
-                {
-                    cookingTime = value; // Fixes SA1101
-                    OnPropertyChanged(); // Fixes SA1101
-                }
+                _cookingTime = value;
+                OnPropertyChanged(nameof(CookingTime));
+                ValidateCookingTime();
             }
         }
 
         public string SelectedMealType
         {
-            get => selectedMealType; // Fixes SA1101
+            get => _selectedMealType;
             set
             {
-                if (selectedMealType != value) // Fixes SA1101
-                {
-                    selectedMealType = value; // Fixes SA1101
-                    OnPropertyChanged(); // Fixes SA1101
-                }
+                _selectedMealType = value;
+                OnPropertyChanged(nameof(SelectedMealType));
+                ValidateMealType();
             }
         }
 
         public string SelectedCookingLevel
         {
-            get => selectedCookingLevel; // Fixes SA1101
+            get => _selectedCookingLevel; // Fixes SA1101
             set
             {
-                if (selectedCookingLevel != value) // Fixes SA1101
+                if (_selectedCookingLevel != value) // Fixes SA1101
                 {
-                    selectedCookingLevel = value; // Fixes SA1101
+                    _selectedCookingLevel = value; // Fixes SA1101
                     OnPropertyChanged(); // Fixes SA1101
                 }
             }
@@ -156,6 +153,50 @@
 
         public ICommand SelectCookingLevelCommand { get; }
 
+        public string MealNameError
+        {
+            get => _mealNameError;
+            set
+            {
+                _mealNameError = value;
+                OnPropertyChanged(nameof(MealNameError));
+            }
+        }
+
+        public string MealTypeError
+        {
+            get => _mealTypeError;
+            set
+            {
+                _mealTypeError = value;
+                OnPropertyChanged(nameof(MealTypeError));
+            }
+        }
+
+        public string CookingTimeError
+        {
+            get => _cookingTimeError;
+            set
+            {
+                _cookingTimeError = value;
+                OnPropertyChanged(nameof(CookingTimeError));
+            }
+        }
+
+        private void ValidateMealName()
+        {
+            MealNameError = string.IsNullOrWhiteSpace(MealName) ? "Meal name is required" : string.Empty;
+        }
+
+        private void ValidateMealType()
+        {
+            MealTypeError = string.IsNullOrWhiteSpace(SelectedMealType) ? "Meal type is required" : string.Empty;
+        }
+
+        private void ValidateCookingTime()
+        {
+            CookingTimeError = string.IsNullOrWhiteSpace(CookingTime) ? "Cooking time is required" : string.Empty;
+        }
 
         private void CalculateTotalMacros()
         {
@@ -192,44 +233,62 @@
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(selectedCookingLevel)) // Fixes SA1101
+                System.Diagnostics.Debug.WriteLine("=== Starting CreateMealAsync ===");
+                System.Diagnostics.Debug.WriteLine($"Meal object created with ID: {meal.Id}");
+                System.Diagnostics.Debug.WriteLine($"Meal Name: {meal.Name}");
+                System.Diagnostics.Debug.WriteLine($"Meal Category: {meal.Category}");
+                System.Diagnostics.Debug.WriteLine($"Meal Type ID: {meal.Mt_id}");
+                System.Diagnostics.Debug.WriteLine($"Cooking Level: {meal.CookingLevel}");
+                System.Diagnostics.Debug.WriteLine($"Preparation Time: {meal.PreparationTime}");
+                System.Diagnostics.Debug.WriteLine($"Number of Ingredients: {ingredients?.Count ?? 0}");
+
+                if (string.IsNullOrWhiteSpace(SelectedCookingLevel))
                 {
-                    selectedCookingLevel = "Beginner"; // Fixes SA1101
+                    System.Diagnostics.Debug.WriteLine("No cooking level selected, defaulting to 'Beginner'");
+                    SelectedCookingLevel = "Beginner";
                 }
 
                 // Convert cooking time to integer
-                if (!int.TryParse(cookingTime, out int cookingTimeMinutes)) // Fixes SA1101
+                if (!int.TryParse(CookingTime, out int cookingTimeMinutes))
                 {
+                    System.Diagnostics.Debug.WriteLine("Failed to parse cooking time, defaulting to 0");
                     cookingTimeMinutes = 0;
                 }
 
                 // Set all meal properties including calculated macros
-                meal.Name = mealName; // Fixes SA1101
+                meal.Name = MealName;
                 meal.PreparationTime = cookingTimeMinutes;
-                meal.CookingLevel = selectedCookingLevel; // Fixes SA1101
-                meal.Calories = calories; // Fixes SA1101
-                meal.Protein = protein; // Fixes SA1101
-                meal.Carbohydrates = carbs; // Fixes SA1101
-                meal.Fat = fats; // Fixes SA1101
-                meal.Fiber = fiber; // Fixes SA1101
-                meal.Sugar = sugar; // Fixes SA1101
+                meal.CookingLevel = SelectedCookingLevel;
+                meal.Calories = calories;
+                meal.Protein = protein;
+                meal.Carbohydrates = carbs;
+                meal.Fat = fats;
+                meal.Fiber = fiber;
+                meal.Sugar = sugar;
 
-                // Create the meal first
-                bool mealId = await mealService.CreateMealWithCookingLevelAsync(meal,selectedCookingLevel); // Fixes SA1101
+                System.Diagnostics.Debug.WriteLine("Attempting to create meal with service...");
+                bool mealId = await mealService.CreateMealWithCookingLevelAsync(meal, SelectedCookingLevel);
+                
                 if (mealId)
                 {
+                    System.Diagnostics.Debug.WriteLine("Meal created successfully, adding ingredients...");
                     // Then add the meal-ingredient relationships
-                    foreach (var ingredient in ingredients) // Fixes SA1101
+                    foreach (var ingredient in ingredients)
                     {
-                        await mealService.AddIngredientToMealAsync(meal.Id, ingredient.IngredientId, ingredient.Quantity); // Fixes SA1101
+                        System.Diagnostics.Debug.WriteLine($"Adding ingredient: {ingredient.IngredientName} (ID: {ingredient.IngredientId})");
+                        await mealService.AddIngredientToMealAsync(meal.Id, ingredient.IngredientId, ingredient.Quantity);
                     }
+                    System.Diagnostics.Debug.WriteLine("=== Meal Creation Completed Successfully ===");
                     return true;
                 }
+                
+                System.Diagnostics.Debug.WriteLine("Failed to create meal in service");
                 return false;
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error creating meal: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Error in CreateMealAsync: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Stack trace: {ex.StackTrace}");
                 return false;
             }
         }

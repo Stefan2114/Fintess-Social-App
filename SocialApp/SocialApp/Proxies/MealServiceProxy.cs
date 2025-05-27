@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AppCommonClasses.Interfaces;
 using System.Net;
+using System;
 
 namespace SocialApp.Proxies
 {
@@ -19,19 +20,44 @@ namespace SocialApp.Proxies
 
         public async Task<bool> CreateMealWithCookingLevelAsync(Meal mealToCreate, string cookingLevelDescription)
         {
-            var response = await _httpClient.PostAsJsonAsync(
-                $"api/meals/create-with-level?cookingLevelDescription={cookingLevelDescription}", mealToCreate);
+            try
+            {
+                System.Diagnostics.Debug.WriteLine("=== CreateMealWithCookingLevelAsync Started ===");
+                System.Diagnostics.Debug.WriteLine($"Sending meal creation request: {mealToCreate.Name}");
+                System.Diagnostics.Debug.WriteLine($"Cooking Level: {cookingLevelDescription}");
+                System.Diagnostics.Debug.WriteLine($"Base URL: {_httpClient.BaseAddress}");
+                
+                var url = $"meals/create-with-level?cookingLevelDescription={cookingLevelDescription}";
+                System.Diagnostics.Debug.WriteLine($"Full URL: {url}");
+                
+                var response = await _httpClient.PostAsJsonAsync(url, mealToCreate);
+                System.Diagnostics.Debug.WriteLine($"Response Status: {response.StatusCode}");
 
-            if (response.IsSuccessStatusCode)
-                return true;
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = await response.Content.ReadFromJsonAsync<dynamic>();
+                    System.Diagnostics.Debug.WriteLine($"Meal creation response: {result}");
+                    System.Diagnostics.Debug.WriteLine("=== CreateMealWithCookingLevelAsync Completed Successfully ===");
+                    return true;
+                }
 
-            // Throw for web, return false for desktop
-            throw new HttpRequestException($"Failed to create meal with cooking level. Status: {response.StatusCode}");
+                var error = await response.Content.ReadAsStringAsync();
+                System.Diagnostics.Debug.WriteLine($"Failed to create meal. Status: {response.StatusCode}, Error: {error}");
+                System.Diagnostics.Debug.WriteLine("=== CreateMealWithCookingLevelAsync Failed ===");
+                return false;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Exception in CreateMealWithCookingLevelAsync: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Stack trace: {ex.StackTrace}");
+                System.Diagnostics.Debug.WriteLine("=== CreateMealWithCookingLevelAsync Failed with Exception ===");
+                return false;
+            }
         }
 
         public async Task<List<Meal>> RetrieveAllMealsAsync()
         {
-            var response = await _httpClient.GetAsync("api/meals");
+            var response = await _httpClient.GetAsync("meals");
             if (response.IsSuccessStatusCode)
                 return await response.Content.ReadFromJsonAsync<List<Meal>>() ?? new List<Meal>();
 
@@ -40,7 +66,7 @@ namespace SocialApp.Proxies
 
         public async Task<Ingredient?> RetrieveIngredientByNameAsync(string ingredientName)
         {
-            var response = await _httpClient.GetAsync($"api/meals/ingredient/{ingredientName}");
+            var response = await _httpClient.GetAsync($"meals/ingredient/{ingredientName}");
             if (response.IsSuccessStatusCode)
                 return await response.Content.ReadFromJsonAsync<Ingredient>();
 
@@ -52,7 +78,7 @@ namespace SocialApp.Proxies
 
         public async Task<int> CreateMealAsync(Meal mealToCreate)
         {
-            var response = await _httpClient.PostAsJsonAsync("api/meals", mealToCreate);
+            var response = await _httpClient.PostAsJsonAsync("meals", mealToCreate);
             if (response.IsSuccessStatusCode)
                 return await response.Content.ReadFromJsonAsync<int>();
 
@@ -62,7 +88,7 @@ namespace SocialApp.Proxies
         public async Task<bool> AddIngredientToMealAsync(int mealIdentifier, int ingredientIdentifier, float ingredientQuantity)
         {
             var response = await _httpClient.PostAsJsonAsync(
-                "api/meals/addingredient",
+                "meals/addingredient",
                 new { mealIdentifier, ingredientIdentifier, ingredientQuantity });
 
             if (response.IsSuccessStatusCode)

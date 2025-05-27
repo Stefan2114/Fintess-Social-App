@@ -24,14 +24,48 @@ namespace MealSocialServerMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Meal model)
         {
+            System.Diagnostics.Debug.WriteLine("POST Create action called");
+
+            // Handle image upload if provided
+            if (model.ImageFile != null && model.ImageFile.Length > 0)
+            {
+                using (var ms = new MemoryStream())
+                {
+                    await model.ImageFile.CopyToAsync(ms);
+                    model.Image = ms.ToArray();
+                }
+            }
+
             if (ModelState.IsValid)
             {
-                bool created = await mealService.CreateMealWithCookingLevelAsync(model, model.CookingLevel);
+                // Set CreatedAt to now
+                model.CreatedAt = DateTime.Now;
 
-                if (created)
-                    return RedirectToAction("Index");
+                try
+                {
+                    bool created = await mealService.CreateMealWithCookingLevelAsync(model, model.CookingLevel);
 
-                ModelState.AddModelError("", "Failed to create meal.");
+                    if (created)
+                        return RedirectToAction("Index");
+
+                    System.Diagnostics.Debug.WriteLine("Meal creation failed in service/repository.");
+                    ModelState.AddModelError("", "Failed to create meal.");
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Exception: {ex}");
+                    ModelState.AddModelError("", $"Exception: {ex.Message}");
+                }
+            }
+            else
+            {
+                foreach (var key in ModelState.Keys)
+                {
+                    foreach (var error in ModelState[key].Errors)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"ModelState error for {key}: {error.ErrorMessage}");
+                    }
+                }
             }
             return View(model);
         }

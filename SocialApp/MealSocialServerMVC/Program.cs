@@ -5,6 +5,7 @@ using AppCommonClasses.Services;
 using MealSocialServerMVC.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Server.Repos;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -44,7 +45,12 @@ builder.Services.AddScoped<ICalorieService, CalorieService>();
 builder.Services.AddSession();
 builder.Services.AddScoped<IWaterIntakeService, WaterService>();
 builder.Services.AddScoped<IGroupService, GroupService>();
-
+builder.Services.AddScoped<IDataLink>(provider =>
+{
+    var configuration = provider.GetRequiredService<IConfiguration>();
+    var connectionString = configuration.GetConnectionString("DefaultConnection");
+    return new DataLink(connectionString);
+});
 builder.Services.AddControllersWithViews();
 
 

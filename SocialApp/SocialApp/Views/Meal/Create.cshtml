@@ -6,47 +6,122 @@
 
 <h2>Create Meal</h2>
 
-<form asp-action="Create" method="post">
+<div asp-validation-summary="All" class="text-danger"></div>
+
+<form asp-action="Create" method="post" id="createMealForm">
     <div class="form-group">
         <label asp-for="Name"></label>
-        <input asp-for="Name" class="form-control" />
+        <input asp-for="Name" class="form-control" required />
         <span asp-validation-for="Name" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Category"></label>
-        <input asp-for="Category" class="form-control" />
+        <input asp-for="Category" class="form-control" required />
         <span asp-validation-for="Category" class="text-danger"></span>
     </div>
     <div class="form-group">
+        <label asp-for="Ingredients"></label>
+        <textarea asp-for="Ingredients" class="form-control" required></textarea>
+        <span asp-validation-for="Ingredients" class="text-danger"></span>
+    </div>
+    <div class="form-group">
         <label asp-for="Calories"></label>
-        <input asp-for="Calories" class="form-control" />
+        <input asp-for="Calories" class="form-control" type="number" step="0.01" required />
         <span asp-validation-for="Calories" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Protein"></label>
-        <input asp-for="Protein" class="form-control" />
+        <input asp-for="Protein" class="form-control" type="number" step="0.01" required />
         <span asp-validation-for="Protein" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Carbohydrates"></label>
-        <input asp-for="Carbohydrates" class="form-control" />
+        <input asp-for="Carbohydrates" class="form-control" type="number" step="0.01" required />
         <span asp-validation-for="Carbohydrates" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Fat"></label>
-        <input asp-for="Fat" class="form-control" />
+        <input asp-for="Fat" class="form-control" type="number" step="0.01" required />
         <span asp-validation-for="Fat" class="text-danger"></span>
     </div>
     <div class="form-group">
+        <label asp-for="Fiber"></label>
+        <input asp-for="Fiber" class="form-control" type="number" step="0.01" required />
+        <span asp-validation-for="Fiber" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Sugar"></label>
+        <input asp-for="Sugar" class="form-control" type="number" step="0.01" required />
+        <span asp-validation-for="Sugar" class="text-danger"></span>
+    </div>
+    <div class="form-group">
         <label asp-for="Servings"></label>
-        <input asp-for="Servings" class="form-control" />
+        <input asp-for="Servings" class="form-control" type="number" step="0.01" required />
         <span asp-validation-for="Servings" class="text-danger"></span>
     </div>
     <div class="form-group">
+        <label asp-for="PreparationTime"></label>
+        <input asp-for="PreparationTime" class="form-control" type="number" step="0.01" required />
+        <span asp-validation-for="PreparationTime" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="PhotoLink"></label>
+        <input asp-for="PhotoLink" class="form-control" required />
+        <span asp-validation-for="PhotoLink" class="text-danger"></span>
+    </div>
+    <div class="form-group">
         <label asp-for="Recipe"></label>
-        <textarea asp-for="Recipe" class="form-control"></textarea>
+        <textarea asp-for="Recipe" class="form-control" required></textarea>
         <span asp-validation-for="Recipe" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn btn-success">Create</button>
+    <div class="form-group">
+        <label asp-for="Mt_id">Meal Type</label>
+        <select asp-for="Mt_id" class="form-control" required>
+            <option value="1">Breakfast</option>
+            <option value="2">Lunch</option>
+            <option value="3">Dinner</option>
+            <option value="4">Snack</option>
+            <option value="5">Dessert</option>
+            <option value="6">Post Workout</option>
+            <option value="7">Pre Workout</option>
+            <option value="8">Vegan</option>
+            <option value="9">High Protein</option>
+            <option value="10">Low Carb</option>
+        </select>
+        <span asp-validation-for="Mt_id" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-success" id="createButton">Create</button>
     <a asp-action="Index" class="btn btn-secondary">Back to List</a>
 </form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
+    <script>
+        $(document).ready(function() {
+            $('#createMealForm').on('submit', function(e) {
+                console.log('Form submitted');
+                
+                // Show loading state
+                $('#createButton').prop('disabled', true).text('Creating...');
+                
+                // Validate form
+                if (!$(this).valid()) {
+                    $('#createButton').prop('disabled', false).text('Create');
+                    return;
+                }
+                
+                // Log form data
+                var formData = $(this).serialize();
+                console.log('Form data:', formData);
+            });
+            
+            // Handle validation errors
+            $.validator.setDefaults({
+                submitHandler: function() {
+                    console.log('Form is valid, submitting...');
+                }
+            });
+        });
+    </script>
+}

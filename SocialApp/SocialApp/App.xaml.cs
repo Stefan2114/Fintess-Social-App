@@ -9,6 +9,7 @@ using Microsoft.UI.Xaml.Controls;
 using SocialApp.Interfaces;
 using SocialApp.Pages;
 using SocialApp.Proxies;
+using SocialApp.Repository;
 using SocialApp.Services;
 using SocialApp.ViewModels;
 
@@ -38,7 +39,7 @@ namespace SocialApp
             services.AddSingleton<IGroceryListRepository, GroceryListRepositoryProxy>();
 
 
-            services.AddHttpClient<MealServiceProxy>(); // ce plm e asta???
+            services.AddHttpClient<IMealService,MealServiceProxy>(); // ce plm e asta???
             services.AddSingleton<IUserService, UserServiceProxy>();
             services.AddSingleton<IPostService, PostServiceProxy>();
             services.AddSingleton<ICommentService, CommentServiceProxy>();

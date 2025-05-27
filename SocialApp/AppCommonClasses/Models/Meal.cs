@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AppCommonClasses.Enums;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Http;
 
 namespace AppCommonClasses.Models
 {
@@ -55,9 +57,13 @@ namespace AppCommonClasses.Models
 
         public string CookingLevel { get; set; }
 
+        [BindNever]
         public byte[] Image { get; set; }
 
         public string ImagePath { get; set; }
+
+        [NotMapped]
+        public IFormFile ImageFile { get; set; }
 
         public Meal(string name, string ingredients, int calories, string category, string photoLink, string recipe)
         {

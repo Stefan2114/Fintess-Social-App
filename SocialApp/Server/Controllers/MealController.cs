@@ -5,6 +5,7 @@ namespace Server.Controllers
     using Microsoft.AspNetCore.Mvc;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using System;
 
     [ApiController]
     [Route("meals")]
@@ -36,10 +37,23 @@ namespace Server.Controllers
         [HttpPost]
         public async Task<ActionResult<int>> CreateMeal([FromBody] Meal meal)
         {
-            var result = await mealService.CreateMealWithCookingLevelAsync(meal,"Default");
-            if (result)
-                return Ok(1);
-            return BadRequest();
+            try
+            {
+                System.Diagnostics.Debug.WriteLine($"Creating meal: {meal.Name}");
+                var result = await mealService.CreateMealWithCookingLevelAsync(meal, "Default");
+                if (result)
+                {
+                    System.Diagnostics.Debug.WriteLine("Meal created successfully");
+                    return Ok(new { success = true, message = "Meal created successfully" });
+                }
+                System.Diagnostics.Debug.WriteLine("Failed to create meal");
+                return BadRequest(new { success = false, message = "Failed to create meal" });
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error creating meal: {ex.Message}");
+                return StatusCode(500, new { success = false, message = ex.Message });
+            }
         }
 
         [HttpPost("create-with-level")]

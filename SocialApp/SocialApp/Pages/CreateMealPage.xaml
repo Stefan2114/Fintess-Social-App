@@ -58,8 +58,9 @@
                           FontSize="16"
                           Foreground="Black" 
                           Margin="0,0,0,8"/>
-                <TextBox PlaceholderText="Chicken Stir-Fry"
+                <TextBox x:Name="MealNameTextBox" 
                          Text="{Binding MealName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         PlaceholderText="Enter meal name"
                          Background="#E3C7B1"
                          BorderThickness="0"
                          Height="30"
@@ -67,6 +68,10 @@
                          VerticalAlignment="Center"
                          TextAlignment="Left"
                          CornerRadius="15"/>
+                <TextBlock x:Name="MealNameError" 
+                          Foreground="Red" 
+                          Margin="0,5,0,0"
+                          Text="{Binding MealNameError, Mode=OneWay}"/>
             </StackPanel>
 
             <!-- Meal Type and Cooking Level Section -->
@@ -83,36 +88,20 @@
                              FontWeight="Bold"
                              Foreground="Black"
                              Margin="0,0,0,8"/>
-                    <StackPanel Orientation="Horizontal" Spacing="8">
-                        <Button Content="Breakfast" 
-                                Background="#E67C59"
-                                Foreground="White"
-                                CornerRadius="20"
-                                Padding="12,5"
-                                Command="{Binding SelectMealTypeCommand}"
-                                CommandParameter="Breakfast"/>
-                        <Button Content="Lunch" 
-                                Background="#C4A484"
-                                Foreground="White"
-                                CornerRadius="20"
-                                Padding="12,5"
-                                Command="{Binding SelectMealTypeCommand}"
-                                CommandParameter="Lunch"/>
-                        <Button Content="Dinner" 
-                                Background="#6B8E76"
-                                Foreground="White"
-                                CornerRadius="20"
-                                Padding="12,5"
-                                Command="{Binding SelectMealTypeCommand}"
-                                CommandParameter="Dinner"/>
-                        <Button Content="Snack" 
-                                Background="#E5C1A9"
-                                Foreground="White"
-                                CornerRadius="20"
-                                Padding="12,5"
-                                Command="{Binding SelectMealTypeCommand}"
-                                CommandParameter="Snack"/>
-                    </StackPanel>
+                    <ComboBox x:Name="MealTypeComboBox"
+                              ItemsSource="{Binding MealTypes}"
+                              SelectedItem="{Binding SelectedMealType, Mode=TwoWay}"
+                              PlaceholderText="Select meal type"
+                              Background="#E3C7B1"
+                              BorderThickness="0"
+                              Height="30"
+                              Width="250"
+                              VerticalAlignment="Center"
+                              CornerRadius="15"/>
+                    <TextBlock x:Name="MealTypeError" 
+                              Foreground="Red" 
+                              Margin="0,5,0,0"
+                              Text="{Binding MealTypeError, Mode=OneWay}"/>
                 </StackPanel>
 
                 <!-- Cooking Level -->
@@ -155,12 +144,20 @@
                           FontWeight="Bold"
                           Foreground="Black"
                           Margin="0,0,0,8"/>
-                <TextBox PlaceholderText="Cooking time (minutes)"
+                <TextBox x:Name="CookingTimeTextBox"
                          Text="{Binding CookingTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         PlaceholderText="Enter cooking time in minutes"
                          Background="#E3C7B1"
                          BorderThickness="0"
-                         Height="40"
+                         Height="30"
+                         Width="250"
+                         VerticalAlignment="Center"
+                         TextAlignment="Left"
                          CornerRadius="15"/>
+                <TextBlock x:Name="CookingTimeError" 
+                          Foreground="Red" 
+                          Margin="0,5,0,0"
+                          Text="{Binding CookingTimeError, Mode=OneWay}"/>
             </StackPanel>
 
             <!-- Directions Section -->

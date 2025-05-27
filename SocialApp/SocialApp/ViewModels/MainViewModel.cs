@@ -15,7 +15,7 @@ namespace SocialApp.ViewModels
     using SocialApp.Proxies;
     using SocialApp.Queries;
     using SocialApp.Services;
-
+     
     public class MainViewModel : INotifyPropertyChanged
     {
         // Generic method to update properties
@@ -375,7 +375,7 @@ namespace SocialApp.ViewModels
                     new SqlParameter("@UserId", userId),
                 };
 
-                DataTable mealsTable = DataLink.Instance.ExecuteReader("dbo.get_last_6_unique_meals_pr", parameters);
+                DataTable mealsTable = SocialApp.Queries.DataLink.Instance.ExecuteReader("dbo.get_last_6_unique_meals_pr", parameters);
 
                 if (mealsTable.Rows.Count > 0)
                 {

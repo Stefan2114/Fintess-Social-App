@@ -3,10 +3,14 @@ using Microsoft.AspNetCore.Mvc;
 using SocialApp.Proxies;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System;
+using System.IO;
 
 namespace SocialApp.Controllers
 {
-    public class MealController : Controller
+    [ApiController]
+    [Route("api/[controller]")]
+    public class MealController : ControllerBase
     {
         private readonly MealServiceProxy mealServiceProxy;
 
@@ -15,32 +19,46 @@ namespace SocialApp.Controllers
             this.mealServiceProxy = mealServiceProxy;
         }
 
-        // GET: /Meal
-        public async Task<IActionResult> Index()
+        // GET: api/Meal
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Meal>>> GetMeals()
         {
             var meals = await mealServiceProxy.RetrieveAllMealsAsync();
-            return View(meals);
+            return Ok(meals);
         }
 
-        // GET: /Meal/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: /Meal/Create
+        // POST: api/Meal
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Meal meal)
+        public async Task<ActionResult> CreateMeal([FromForm] Meal meal)
         {
-            if (ModelState.IsValid)
+            // Handle image upload if provided
+            if (meal.ImageFile != null && meal.ImageFile.Length > 0)
             {
-                var result = await mealServiceProxy.CreateMealAsync(meal);
-                if (result > 0)
-                    return RedirectToAction(nameof(Index));
-                ModelState.AddModelError("", "Failed to create meal.");
+                using (var ms = new MemoryStream())
+                {
+                    await meal.ImageFile.CopyToAsync(ms);
+                    meal.Image = ms.ToArray();
+                }
             }
-            return View(meal);
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                var result = await mealServiceProxy.CreateMealWithCookingLevelAsync(meal, meal.CookingLevel ?? "Beginner");
+                if (result)
+                {
+                    return CreatedAtAction(nameof(GetMeals), new { id = meal.Id }, meal);
+                }
+                return BadRequest("Failed to create meal.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error creating meal: {ex.Message}");
+            }
         }
     }
 }

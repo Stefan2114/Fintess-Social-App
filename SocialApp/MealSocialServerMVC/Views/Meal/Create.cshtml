@@ -6,7 +6,9 @@
 
 <h2>Create Meal</h2>
 
-<form asp-action="Create" method="post">
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+<form asp-action="Create" method="post" enctype="multipart/form-data">
     <div class="form-group">
         <label asp-for="Name"></label>
         <input asp-for="Name" class="form-control" />
@@ -43,10 +45,57 @@
         <span asp-validation-for="Servings" class="text-danger"></span>
     </div>
     <div class="form-group">
+        <label asp-for="Ingredients"></label>
+        <input asp-for="Ingredients" class="form-control" />
+        <span asp-validation-for="Ingredients" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="PhotoLink"></label>
+        <input asp-for="PhotoLink" class="form-control" />
+        <span asp-validation-for="PhotoLink" class="text-danger"></span>
+    </div>
+    <div class="form-group">
         <label asp-for="Recipe"></label>
-        <textarea asp-for="Recipe" class="form-control"></textarea>
+        <input asp-for="Recipe" class="form-control" />
         <span asp-validation-for="Recipe" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="PreparationTime"></label>
+        <input asp-for="PreparationTime" class="form-control" />
+        <span asp-validation-for="PreparationTime" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Fiber"></label>
+        <input asp-for="Fiber" class="form-control" />
+        <span asp-validation-for="Fiber" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Sugar"></label>
+        <input asp-for="Sugar" class="form-control" />
+        <span asp-validation-for="Sugar" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="CookingLevel"></label>
+        <input asp-for="CookingLevel" class="form-control" />
+        <span asp-validation-for="CookingLevel" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ImageFile"></label>
+        <input asp-for="ImageFile" type="file" class="form-control" />
+        <span asp-validation-for="ImageFile" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ImagePath"></label>
+        <input asp-for="ImagePath" class="form-control" />
+        <span asp-validation-for="ImagePath" class="text-danger"></span>
     </div>
     <button type="submit" class="btn btn-success">Create</button>
     <a asp-action="Index" class="btn btn-secondary">Back to List</a>
 </form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

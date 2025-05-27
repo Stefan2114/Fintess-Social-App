@@ -53,23 +53,57 @@ namespace SocialApp.Pages
         {
             try
             {
-                // Validate required fields
-                if (string.IsNullOrWhiteSpace(this.viewModel.MealName) ||
-                    string.IsNullOrWhiteSpace(this.viewModel.SelectedMealType) ||
-                    string.IsNullOrWhiteSpace(this.viewModel.CookingTime))
-                {
-                    var dialog = new ContentDialog
-                    {
-                        Title = "Validation Error",
-                        Content = "Please enter all required fields: meal name, meal type, and cooking time.",
-                        CloseButtonText = "OK",
-                        XamlRoot = this.XamlRoot,
-                    };
+                System.Diagnostics.Debug.WriteLine("=== SaveButton_Click Started ===");
+                
+                // Clear previous validation messages
+                MealNameError.Text = "";
+                MealTypeError.Text = "";
+                CookingTimeError.Text = "";
+                
+                bool hasErrors = false;
 
-                    await dialog.ShowAsync();
+                // Validate required fields with visual feedback
+                if (string.IsNullOrWhiteSpace(this.viewModel.MealName))
+                {
+                    MealNameError.Text = "Meal name is required";
+                    hasErrors = true;
+                }
+
+                if (string.IsNullOrWhiteSpace(this.viewModel.SelectedMealType))
+                {
+                    MealTypeError.Text = "Meal type is required";
+                    hasErrors = true;
+                }
+
+                if (string.IsNullOrWhiteSpace(this.viewModel.CookingTime))
+                {
+                    CookingTimeError.Text = "Cooking time is required";
+                    hasErrors = true;
+                }
+
+                if (hasErrors)
+                {
+                    System.Diagnostics.Debug.WriteLine("Validation failed - missing required fields");
                     return;
                 }
 
+                // Add debug logging
+                System.Diagnostics.Debug.WriteLine("=== Starting Meal Creation ===");
+                System.Diagnostics.Debug.WriteLine($"Meal Name: {this.viewModel.MealName}");
+                System.Diagnostics.Debug.WriteLine($"Selected Meal Type: {this.viewModel.SelectedMealType}");
+                System.Diagnostics.Debug.WriteLine($"Cooking Time: {this.viewModel.CookingTime}");
+                System.Diagnostics.Debug.WriteLine($"Selected Cooking Level: {this.viewModel.SelectedCookingLevel}");
+                System.Diagnostics.Debug.WriteLine($"Number of Directions: {this.viewModel.Directions?.Count ?? 0}");
+                System.Diagnostics.Debug.WriteLine($"Number of Ingredients: {this.viewModel.Ingredients?.Count ?? 0}");
+                System.Diagnostics.Debug.WriteLine($"Total Calories: {this.viewModel.TotalCalories}");
+                System.Diagnostics.Debug.WriteLine($"Total Protein: {this.viewModel.TotalProtein}");
+                System.Diagnostics.Debug.WriteLine($"Total Carbs: {this.viewModel.TotalCarbs}");
+                System.Diagnostics.Debug.WriteLine($"Total Fats: {this.viewModel.TotalFats}");
+                System.Diagnostics.Debug.WriteLine($"Total Fiber: {this.viewModel.TotalFiber}");
+                System.Diagnostics.Debug.WriteLine($"Total Sugar: {this.viewModel.TotalSugar}");
+                System.Diagnostics.Debug.WriteLine("===========================");
+
+                System.Diagnostics.Debug.WriteLine("Creating meal object...");
                 // Create meal with all required properties
                 var meal = new Meal
                 {
@@ -94,10 +128,13 @@ namespace SocialApp.Pages
                     Image = new byte[] { 137, 80, 78, 71, 13, 10, 26, 10 },
                 };
 
+                System.Diagnostics.Debug.WriteLine("Calling CreateMealAsync...");
                 bool success = await viewModel.CreateMealAsync(meal);
+                System.Diagnostics.Debug.WriteLine($"CreateMealAsync result: {success}");
 
                 if (success)
                 {
+                    System.Diagnostics.Debug.WriteLine("Meal created successfully, showing success dialog");
                     var dialog = new ContentDialog
                     {
                         Title = "Success",
@@ -107,10 +144,12 @@ namespace SocialApp.Pages
                     };
 
                     await dialog.ShowAsync();
+                    System.Diagnostics.Debug.WriteLine("Navigating to MainPage");
                     this.Frame.Navigate(typeof(MainPage));
                 }
                 else
                 {
+                    System.Diagnostics.Debug.WriteLine("Meal creation failed, showing error dialog");
                     var dialog = new ContentDialog
                     {
                         Title = "Error",
@@ -124,7 +163,7 @@ namespace SocialApp.Pages
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error saving meal: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Error in SaveButton_Click: {ex.Message}");
                 System.Diagnostics.Debug.WriteLine($"Stack trace: {ex.StackTrace}");
 
                 var dialog = new ContentDialog
@@ -137,6 +176,10 @@ namespace SocialApp.Pages
 
                 await dialog.ShowAsync();
             }
+            finally
+            {
+                System.Diagnostics.Debug.WriteLine("=== SaveButton_Click Completed ===");
+            }
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
@@ -145,3 +188,4 @@ namespace SocialApp.Pages
         }
     }
 }
+

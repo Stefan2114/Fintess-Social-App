@@ -9,5 +9,7 @@ namespace MealSocialServerMVC.Data
             : base(options)
         {
         }
+
+        public DbSet<AppCommonClasses.Models.Meal> Meals { get; set; }
     }
 }
