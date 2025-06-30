@@ -3,17 +3,6 @@ Welcome to the GitHub repository for **Team Babes**! This section of the Workout
 
 ---
 
-## Project Overview  
-Our section is a social platform where users can:  
-- Share **posts** about their fitness journey.  
-- Log **workouts** and **meals**.  
-- Join **groups** to connect with like-minded individuals.  
-- Follow other users and interact with their content.  
-
-This section is built with a focus on usability, responsiveness, and a seamless user experience.
-
----
-
 ## Features  
 - **Home Page**:  
   - Feed of posts with infinite scrolling.  
@@ -214,16 +203,6 @@ Assert.NotNull(result);
 Generated on: 2025-05-20 11:12:30
 Repository: UBB-SE-2025-927-2
 Date Range: From: 2025-04-01, To: 2025-05-20
-
-## Visualizations
-### Commits per Contributor
-![Commits per Contributor](contribution_visualizations/commits_per_contributor.png)
-### Lines Changed
-![Lines Changed](contribution_visualizations/lines_changed.png)
-### Contribution Timeline
-![Contribution Timeline](contribution_visualizations/contribution_timeline.png)
-### Non-Negligible Work Assessment
-![Non-Negligible Work Assessment](contribution_visualizations/contribution_assessment.png)
 
 ## Detailed Analysis
 ### Mihai Țălu
