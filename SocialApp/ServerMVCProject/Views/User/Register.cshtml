@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "Register";
+}
+@model ServerMVCProject.Models.AuthenticationModel
+
+<h2>Register</h2>
+
+<form method="post" class="mt-4" asp-controller="User" asp-action="Register">
+    <div class="form-group mb-3">
+        <input asp-for="Username" class="form-control" placeholder="username" />
+    </div>
+
+    <div class="form-group mb-4">
+        <input asp-for="Password" class="form-control" placeholder="password" type="password" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Register</button>
+</form>
