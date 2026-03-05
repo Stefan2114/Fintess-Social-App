@@ -1,5 +1,5 @@
-# Team Babes - Something Something Social
-Welcome to the GitHub repository for **Team Babes**! This section of the Workout App is designed to help users share their fitness journeys, connect with friends, and stay motivated through posts, workouts, meals, and group interactions.
+# Fitness Social App
+The Workout App is designed to help users share their fitness journeys, connect with friends, and stay motivated through posts, workouts, meals, and group interactions.
 
 ---
 
